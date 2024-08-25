@@ -1,0 +1,25 @@
+name: Templater
+description: 'A GitHub Action that runs a shell script'
+inputs:
+  template:
+    description: 'Template file path. For example, templates/first-template.md'
+    required: true
+  file:
+    description: 'Generated file name from template. For example, outputs/first-templated-file.md'
+    required: true
+  variables:
+    description: 'List of key=value pairs'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - name: Generating '${{ inputs.file }}' from '${{ inputs.template }}'
+      shell: bash
+      run: |
+        template_content=$(cat ${{ inputs.template }})
+        for variable in ${{ inputs.variables }}; do
+          key=$(echo $variable | cut -d'=' -f1)
+          value=$(echo $variable | cut -d'=' -f2-)
+          template_content=${template_content//\{\{$key\}\}/$value}
+        done
+        echo "$template_content" > ${{ inputs.file }}
