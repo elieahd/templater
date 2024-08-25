@@ -1,5 +1,9 @@
-name: Templater
-description: 'A GitHub Action that runs a shell script'
+name: 'File Templater'
+description: 'Simplifies the process of creating files based on existing templates by easily substituting {{variables}} with actual values'
+author: 'elieahd'
+branding:
+  icon: 'file-text'
+  color: 'blue'
 inputs:
   template:
     description: 'Template file path. For example, templates/first-template.md'
